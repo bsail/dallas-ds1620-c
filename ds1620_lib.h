@@ -26,27 +26,29 @@
 
 #include <inttypes.h>
 
-class DS1620
-{
-  public:
-    DS1620(int DQ, int CLK, int RST);
-    int read_temp();
-    void write_th(int);
-    void write_tl(int);
-    int read_th();
-    int read_tl();
-    int read_counter();
-    int read_slope();
-    void start_conv();
-    void stop_conv();
-    int write_config(int);
-    int read_config();
+uint8_t DS1620_current_device;
+
+// class DS1620
+// {
+//   public:
+    void DS1620_DS1620(int DQ, int CLK, int RST);
+    int DS1620_read_temp();
+    void DS1620_write_th(int);
+    void DS1620_write_tl(int);
+    int DS1620_read_th();
+    int DS1620_read_tl();
+    int DS1620_read_counter();
+    int DS1620_read_slope();
+    void DS1620_start_conv();
+    void DS1620_stop_conv();
+    int DS1620_write_config(int);
+    int DS1620_read_config();
     
-  private:
-    int receive_data();
-    void rst_start();
-    void rst_stop();
-    void send_command(int);
+  // private:
+    int DS1620_receive_data();
+    void DS1620_rst_start();
+    void DS1620_rst_stop();
+    void DS1620_send_command(int);
     int _DQ;
     int _CLK;
     int _RST;
@@ -54,6 +56,6 @@ class DS1620
     int _T_LOW;
     int _T_COM;
     
-};
+// };
 
 #endif

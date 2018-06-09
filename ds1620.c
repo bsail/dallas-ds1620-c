@@ -37,7 +37,7 @@
 
 #include <subsystems/avr/Arduino.h>
 #include <subsystems/io/sail_io.h>
-#include "ds1620_lib.h"
+#include "ds1620.h"
 
 // DS1620 Commands
 

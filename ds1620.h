@@ -31,7 +31,7 @@ uint8_t DS1620_current_device;
 // class DS1620
 // {
 //   public:
-    void DS1620_DS1620(int DQ, int CLK, int RST);
+    void DS1620_DS1620(/*int DQ, int CLK, int RST*/);
     int DS1620_read_temp();
     void DS1620_write_th(int high_temp);
     void DS1620_write_tl(int temp);
@@ -49,9 +49,9 @@ uint8_t DS1620_current_device;
     void DS1620_rst_start();
     void DS1620_rst_stop();
     void DS1620_send_command(int command);
-    int _DQ;
-    int _CLK;
-    int _RST;
+    // int _DQ;
+    // int _CLK;
+    // int _RST;
     int _T_HIGH;
     int _T_LOW;
     int _T_COM;

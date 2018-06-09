@@ -96,15 +96,15 @@ static inline uint8_t dq_get()
   return io_bit_check(P_K,6);
 }
 
-void DS1620_DS1620(int DQ, int CLK, int RST)
+void DS1620_DS1620(/*int DQ, int CLK, int RST*/)
 {
     io_bit_set(P_K, 4, io_ddr);// pinMode(RST1, OUTPUT);
     io_bit_set(P_K, 5, io_ddr);// pinMode(RST2, OUTPUT);
     io_bit_set(P_K, 6, io_ddr);// pinMode(DQ, OUTPUT);
     io_bit_set(P_K, 7, io_ddr);// pinMode(CLK, OUTPUT);
-    _DQ = DQ;
-    _CLK = CLK;
-    _RST = RST;
+    // _DQ = DQ;
+    // _CLK = CLK;
+    // _RST = RST;
 }
     
 int DS1620_read_temp()

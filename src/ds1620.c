@@ -36,6 +36,7 @@
 #include "ds1620.h"
 #include "ds1620_send_command.h"
 #include "ds1620_receive_data.h"
+#include "ds1620_send_data.h"
 #include "ds1620_reset.h"
 
 // ds1620 Commands
@@ -154,12 +155,7 @@ void ds1620_write_th(int high_temp)
   high_temp = high_temp * 2;
   ds1620_rst_start(&callbacks);
   ds1620_send_command(WRITE_TH,&callbacks); // Next 9 clock cycles, value of the high temp limit
-  for (int n = 0; n < 9; n++) { // Send all nine bits of temperature
-    bit = (high_temp >> n) & 0x01;
-    callbacks.dq_set_callback(bit);       //digitalWrite(_DQ, bit); // DQ HIGH or LOW based on bit
-    callbacks.clock_low_callback();       ///digitalWrite(_CLK, LOW);  // CLK LOW then HIGH to make one cycle
-    callbacks.clock_high_callback();      //digitalWrite(_CLK, HIGH);  
-  }
+  ds1620_send_data(high_temp,&callbacks);
   callbacks.delay_callback(WRITE_DELAY);  // Write can take up to 10ms
   ds1620_rst_stop(&callbacks);
 }
@@ -171,12 +167,7 @@ void ds1620_write_tl(int temp)
   temp = temp * 2;
   ds1620_rst_start(&callbacks);
   ds1620_send_command(WRITE_TL,&callbacks); // Next 9 clock cycles, value of the high temp limit
-  for (int n = 0; n < 9; n++) { // Send all nine bits of temperature
-    bit = (temp >> n) & 0x01;
-    callbacks.dq_set_callback(bit);       //digitalWrite(_DQ, bit); // DQ HIGH or LOW based on bit
-    callbacks.clock_low_callback();       //digitalWrite(_CLK, LOW);  // CLK LOW then HIGH to make one cycle
-    callbacks.clock_high_callback();      //digitalWrite(_CLK, HIGH);  
-  }
+  ds1620_send_data(temp,&callbacks);
   callbacks.delay_callback(WRITE_DELAY);  // Write can take up to 10ms
   ds1620_rst_stop(&callbacks);
 }

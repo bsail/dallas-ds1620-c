@@ -3,7 +3,6 @@
 void ds1620_send_data(int data,
                       struct ds1620_callbacks * callbacks)
 {
-  int n;
   int bit;
 
   if(callbacks!=0)

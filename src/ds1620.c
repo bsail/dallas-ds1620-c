@@ -150,8 +150,6 @@ int ds1620_read_temp(void)
 
 void ds1620_write_th(int high_temp)
 {
-  int bit;
-
   high_temp = high_temp * 2;
   ds1620_rst_start(&callbacks);
   ds1620_send_command(WRITE_TH,&callbacks); // Next 9 clock cycles, value of the high temp limit
@@ -162,8 +160,6 @@ void ds1620_write_th(int high_temp)
 
 void ds1620_write_tl(int temp)
 {
-  int bit;
-
   temp = temp * 2;
   ds1620_rst_start(&callbacks);
   ds1620_send_command(WRITE_TL,&callbacks); // Next 9 clock cycles, value of the high temp limit

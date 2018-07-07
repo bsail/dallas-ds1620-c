@@ -1,5 +1,5 @@
 /*
-  Arduino DS1620 Library 0.1
+  Arduino ds1620 Library 0.1
   Copyright (C) 2009 John P. Mulligan. All rights reserved.
 
   This program is free software: you can redistribute it and/or modify
@@ -16,23 +16,23 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-#ifndef DS1620_h
-#define DS1620_h
+#ifndef ds1620_h
+#define ds1620_h
 
 #include <inttypes.h>
 
-void DS1620_DS1620(void);
-int DS1620_read_temp(void);
-void DS1620_write_th(int high_temp);
-void DS1620_write_tl(int temp);
-int DS1620_read_th(void);
-int DS1620_read_tl(void);
-int DS1620_read_counter(void);
-int DS1620_read_slope(void);
-void DS1620_start_conv(void);
-void DS1620_stop_conv(void);
-int DS1620_write_config(int config_register);
-int DS1620_read_config(void);
+void ds1620_init(void);
+int ds1620_read_temp(void);
+void ds1620_write_th(int high_temp);
+void ds1620_write_tl(int temp);
+int ds1620_read_th(void);
+int ds1620_read_tl(void);
+int ds1620_read_counter(void);
+int ds1620_read_slope(void);
+void ds1620_start_conv(void);
+void ds1620_stop_conv(void);
+int ds1620_write_config(int config_register);
+int ds1620_read_config(void);
 
 void ds1620_clock_low_set_callback(void (*callback) (void));
 void ds1620_clock_high_set_callback(void (*callback) (void));

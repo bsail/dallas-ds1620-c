@@ -1,5 +1,5 @@
 /*
-  Arduino DS1620 Library 0.1
+  Arduino ds1620 Library 0.1
   Copyright (C) 2009 John P. Mulligan. All rights reserved.
 
   This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
 
   Datasheet URL: http://www.maxim-ic.com/quick_view2.cfm/qv_pk/2735
 
-  DS1620 8-Pin DIP Pin Assignment:
+  ds1620 8-Pin DIP Pin Assignment:
   
     1 - DQ         8 - VDD (2.7V - 5.5V)
     2 - CLK/CONV   7 - T HIGH
@@ -35,7 +35,7 @@
 
 #include "ds1620.h"
 
-// DS1620 Commands
+// ds1620 Commands
 
 #define READ_TEMP  0xAA         // Read temperature register
 #define WRITE_TH   0x01         // Write to the TH (High Temp) register
@@ -78,7 +78,7 @@ static void clock_high_callback(void)
 
 static void reset_low_callback(void)
 {
-  if (DS1620_current_device == 1)
+  if (ds1620_current_device == 1)
     io_bit_clear(P_K, 4, io_port);
   else
     io_bit_clear(P_K, 5, io_port);
@@ -86,7 +86,7 @@ static void reset_low_callback(void)
 
 static void reset_high_callback(void)
 {
-  if (DS1620_current_device == 1)
+  if (ds1620_current_device == 1)
     io_bit_set(P_K, 4, io_port);
   else
     io_bit_set(P_K, 5, io_port);
@@ -125,24 +125,24 @@ static void setup_ports_callback(void)
 
 #endif
 
-static int DS1620_receive_data();
-static void DS1620_rst_start();
-static void DS1620_rst_stop();
-static void DS1620_send_command(int command);
+static int ds1620_receive_data();
+static void ds1620_rst_start();
+static void ds1620_rst_stop();
+static void ds1620_send_command(int command);
 
-void DS1620_DS1620(void)
+void ds1620_init(void)
 {
   setup_ports_callback();
 }
 
-int DS1620_read_temp(void)
+int ds1620_read_temp(void)
 {
   short t;
 
-  DS1620_rst_start();
-  DS1620_send_command(READ_TEMP); // Next 9 clock cycles, last temp conv result
-  t = (short)DS1620_receive_data();
-  DS1620_rst_stop();
+  ds1620_rst_start();
+  ds1620_send_command(READ_TEMP); // Next 9 clock cycles, last temp conv result
+  t = (short)ds1620_receive_data();
+  ds1620_rst_stop();
 
   // Check sign bit from Temp
   if (t & 0x0100) {
@@ -158,13 +158,13 @@ int DS1620_read_temp(void)
   return (t);
 }
 
-void DS1620_write_th(int high_temp)
+void ds1620_write_th(int high_temp)
 {
   int bit;
 
   high_temp = high_temp * 2;
-  DS1620_rst_start();
-  DS1620_send_command(WRITE_TH); // Next 9 clock cycles, value of the high temp limit
+  ds1620_rst_start();
+  ds1620_send_command(WRITE_TH); // Next 9 clock cycles, value of the high temp limit
   for (int n = 0; n < 9; n++) { // Send all nine bits of temperature
     bit = (high_temp >> n) & 0x01;
     dq_set_callback(bit);       //digitalWrite(_DQ, bit); // DQ HIGH or LOW based on bit
@@ -172,16 +172,16 @@ void DS1620_write_th(int high_temp)
     clock_high_callback();      //digitalWrite(_CLK, HIGH);  
   }
   delay_callback(WRITE_DELAY);  // Write can take up to 10ms
-  DS1620_rst_stop();
+  ds1620_rst_stop();
 }
 
-void DS1620_write_tl(int temp)
+void ds1620_write_tl(int temp)
 {
   int bit;
 
   temp = temp * 2;
-  DS1620_rst_start();
-  DS1620_send_command(WRITE_TL); // Next 9 clock cycles, value of the high temp limit
+  ds1620_rst_start();
+  ds1620_send_command(WRITE_TL); // Next 9 clock cycles, value of the high temp limit
   for (int n = 0; n < 9; n++) { // Send all nine bits of temperature
     bit = (temp >> n) & 0x01;
     dq_set_callback(bit);       //digitalWrite(_DQ, bit); // DQ HIGH or LOW based on bit
@@ -189,68 +189,68 @@ void DS1620_write_tl(int temp)
     clock_high_callback();      //digitalWrite(_CLK, HIGH);  
   }
   delay_callback(WRITE_DELAY);  // Write can take up to 10ms
-  DS1620_rst_stop();
+  ds1620_rst_stop();
 }
 
-int DS1620_read_th(void)
+int ds1620_read_th(void)
 {
   int temp = 0;
 
-  DS1620_rst_start();
-  DS1620_send_command(READ_TH); // Next 8 clock cycles output value of config register
-  temp = DS1620_receive_data() / 2;
-  DS1620_rst_stop();
+  ds1620_rst_start();
+  ds1620_send_command(READ_TH); // Next 8 clock cycles output value of config register
+  temp = ds1620_receive_data() / 2;
+  ds1620_rst_stop();
   return (temp);
 }
 
-int DS1620_read_tl(void)
+int ds1620_read_tl(void)
 {
   int temp = 0;
 
-  DS1620_rst_start();
-  DS1620_send_command(READ_TL); // Next 8 clock cycles output value of config register
-  temp = DS1620_receive_data() / 2;
-  DS1620_rst_stop();
+  ds1620_rst_start();
+  ds1620_send_command(READ_TL); // Next 8 clock cycles output value of config register
+  temp = ds1620_receive_data() / 2;
+  ds1620_rst_stop();
   return (temp);
 }
 
-int DS1620_read_counter(void)
+int ds1620_read_counter(void)
 {
   int counter = 0;
 
-  DS1620_rst_start();
-  DS1620_send_command(READ_CNTR); // Next 9 clock cycles output value of counter
-  counter = DS1620_receive_data();
-  DS1620_rst_stop();
+  ds1620_rst_start();
+  ds1620_send_command(READ_CNTR); // Next 9 clock cycles output value of counter
+  counter = ds1620_receive_data();
+  ds1620_rst_stop();
   return (counter);
 }
 
-int DS1620_read_slope(void)
+int ds1620_read_slope(void)
 {
   int slope = 0;
 
-  DS1620_rst_start();
-  DS1620_send_command(READ_SLOPE); // Next 9 clock cycles output value of counter
-  slope = DS1620_receive_data();
-  DS1620_rst_stop();
+  ds1620_rst_start();
+  ds1620_send_command(READ_SLOPE); // Next 9 clock cycles output value of counter
+  slope = ds1620_receive_data();
+  ds1620_rst_stop();
   return (slope);
 }
 
-void DS1620_start_conv(void)
+void ds1620_start_conv(void)
 {
-  DS1620_rst_start();
-  DS1620_send_command(START_CNV); // Begins temp conv, depends on 1-shot mode   
-  DS1620_rst_stop();
+  ds1620_rst_start();
+  ds1620_send_command(START_CNV); // Begins temp conv, depends on 1-shot mode   
+  ds1620_rst_stop();
 }
 
-void DS1620_stop_conv(void)
+void ds1620_stop_conv(void)
 {
-  DS1620_rst_start();
-  DS1620_send_command(STOP_CNV); // Stops temperature conversion 
-  DS1620_rst_stop();
+  ds1620_rst_start();
+  ds1620_send_command(STOP_CNV); // Stops temperature conversion 
+  ds1620_rst_stop();
 }
 
-int DS1620_write_config(int config_register)
+int ds1620_write_config(int config_register)
 {
   /*
      Return codes:  0 = Write successful
@@ -258,13 +258,13 @@ int DS1620_write_config(int config_register)
      2 = Bad config register
    */
   if (config_register > 0) {
-    DS1620_rst_start();
-    DS1620_send_command(WRITE_CFG); // Next 8 clock cycles, value of config register;
-    DS1620_send_command(config_register);
+    ds1620_rst_start();
+    ds1620_send_command(WRITE_CFG); // Next 8 clock cycles, value of config register;
+    ds1620_send_command(config_register);
     delay_callback(WRITE_DELAY); // Write can take up to 10ms
-    DS1620_rst_stop();
+    ds1620_rst_stop();
     // Confirm that config was properly written
-    if (DS1620_read_config() == config_register) {
+    if (ds1620_read_config() == config_register) {
       return 0;
     } else {
       return 1;
@@ -273,18 +273,18 @@ int DS1620_write_config(int config_register)
   return 2;
 }
 
-int DS1620_read_config(void)
+int ds1620_read_config(void)
 {
   int config_register = 0;
 
-  DS1620_rst_start();
-  DS1620_send_command(READ_CFG); // Next 8 clock cycles output value of config register
-  config_register = DS1620_receive_data();
-  DS1620_rst_stop();
+  ds1620_rst_start();
+  ds1620_send_command(READ_CFG); // Next 8 clock cycles output value of config register
+  config_register = ds1620_receive_data();
+  ds1620_rst_stop();
   return (config_register);
 }
 
-int DS1620_receive_data(void)
+int ds1620_receive_data(void)
 {
   int data = 0;
   int n;
@@ -303,19 +303,19 @@ int DS1620_receive_data(void)
   return (data);
 }
 
-void DS1620_rst_start(void)
+void ds1620_rst_start(void)
 {
   reset_low_callback();         // digitalWrite(_RST, LOW);
   clock_high_callback();        //digitalWrite(_CLK, HIGH);
   reset_high_callback();        //digitalWrite(_RST, HIGH); // All communications start by taking RST HIGH
 }
 
-void DS1620_rst_stop(void)
+void ds1620_rst_stop(void)
 {
   reset_low_callback();         //digitalWrite(_RST, LOW); // Taking RST LOW will terminate any communication
 }
 
-void DS1620_send_command(int command)
+void ds1620_send_command(int command)
 {
   int n;
   int bit;

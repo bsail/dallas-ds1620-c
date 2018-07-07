@@ -36,7 +36,6 @@ void test_ds1620_send_data_should_work_all_zeroes(void)
     example_dq_set_Expect(0);
     example_clock_low_Expect();
     example_clock_high_Expect();
-
   }
   ds1620_send_data(0,&callbacks);
 }
@@ -48,7 +47,6 @@ void test_ds1620_send_data_should_work_all_ones(void)
     example_dq_set_Expect(1);
     example_clock_low_Expect();
     example_clock_high_Expect();
-
   }
   ds1620_send_data(0x1FF,&callbacks);
 }
@@ -63,7 +61,6 @@ void test_ds1620_send_data_should_work(void)
       example_dq_set_Expect(0);
     example_clock_low_Expect();
     example_clock_high_Expect();
-
   }
   ds1620_send_data(0xAA,&callbacks);
 }

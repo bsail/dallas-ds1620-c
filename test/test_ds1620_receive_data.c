@@ -24,7 +24,50 @@ void tearDown(void)
   memset(&callbacks,0,sizeof(callbacks));
 }
 
-void test_ds1620_receive_data_NeedToImplement(void)
+void test_ds1620_receive_data_null_pointer_should_not_segfault(void)
 {
-    TEST_IGNORE_MESSAGE("Need to Implement ds1620_receive_data");
+  TEST_ASSERT_EQUAL(0,ds1620_receive_data(0));
 }
+
+void test_ds1620_receive_data_should_work_all_zeroes(void)
+{
+  example_dq_set_input_Expect();
+  for(uint8_t i=0;i<9;++i)
+  {
+    example_clock_low_Expect();
+    example_dq_get_ExpectAndReturn(0);
+    example_clock_high_Expect();
+  }
+  example_dq_set_output_Expect();
+  TEST_ASSERT_EQUAL(0,ds1620_receive_data(&callbacks));
+}
+
+void test_ds1620_receive_data_should_work_all_ones(void)
+{
+  example_dq_set_input_Expect();
+  for(uint8_t i=0;i<9;++i)
+  {
+    example_clock_low_Expect();
+    example_dq_get_ExpectAndReturn(1);
+    example_clock_high_Expect();
+  }
+  example_dq_set_output_Expect();
+  TEST_ASSERT_EQUAL(0x1FF,ds1620_receive_data(&callbacks));
+}
+
+void test_ds1620_receive_data_should_work(void)
+{
+  example_dq_set_input_Expect();
+  for(uint8_t i=0;i<9;++i)
+  {
+    example_clock_low_Expect();
+    if(i%2)
+      example_dq_get_ExpectAndReturn(1);
+    else
+      example_dq_get_ExpectAndReturn(0);
+    example_clock_high_Expect();
+  }
+  example_dq_set_output_Expect();
+  TEST_ASSERT_EQUAL(0xAA,ds1620_receive_data(&callbacks));
+}
+

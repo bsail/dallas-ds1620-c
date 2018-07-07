@@ -26,8 +26,6 @@
 
 #include <inttypes.h>
 
-uint8_t DS1620_current_device;
-
 // class DS1620
 // {
 //   public:
@@ -55,7 +53,17 @@ uint8_t DS1620_current_device;
     int _T_HIGH;
     int _T_LOW;
     int _T_COM;
-    
+
+  void ds1620_clock_low_set_callback(void(*callback)(void));
+  void ds1620_clock_high_set_callback(void(*callback)(void));
+  void ds1620_reset_low_set_callback(void(*callback)(void));
+  void ds1620_reset_high_set_callback(void(*callback)(void));
+  void ds1620_dq_set_set_callback(void(*callback)(uint8_t bit));
+  void ds1620_dq_get_set_callback(uint8_t(*callback)(void));
+  void ds1620_dq_set_output_set_callback(void(*callback)(void));
+  void ds1620_dq_set_input_set_callback(void(*callback)(void));
+  void ds1620_setup_ports_set_callback(void(*callback)(void));
+  void ds1620_delay_set_callback(void (*callback)(unsigned long));
 // };
 
 #endif

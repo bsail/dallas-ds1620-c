@@ -53,6 +53,8 @@ You may use and create additional tasks for Ceedling build system. Please refer 
   * ds1620_send_command.c - implementation of command interface
   * ds1620_receive_data.h - header for data receive subroutine
   * ds1620_receive_data.c - implementation of data receive subroutine
+  * ds1620_send_data.h - header for data send subroutine
+  * ds1620_send_data.c - implementation of data send subroutine
   * ds1620_reset.h - header for reset functions
   * ds1620_reset.c - implementation of reset functions
 
@@ -60,6 +62,7 @@ You may use and create additional tasks for Ceedling build system. Please refer 
   * test_ds1620.c - Unity test file for ds1620.c module (use `ceedling test:ds1620` to run tests only in this source file)
   * test_ds1620_send_command.c - Unity test file for ds1620_send_command.c module (use `ceedling test:ds1620_send_command` to run tests only in this source file)
   * test_ds1620_receive_data.c - Unity test file for ds1620_receive_data.c module (use `ceedling test:ds1620_receive_data` to run tests only in this source file)
+  * test_ds1620_send_data.c - Unity test file for ds1620_send_data.c module (use `ceedling test:ds1620_send_data` to run tests only in this source file)
   * test_ds1620_reset.c - Unity test file for ds1620_reset.c module (use `ceedling test:ds1620_reset` to run tests only in this source file)
 
 * /

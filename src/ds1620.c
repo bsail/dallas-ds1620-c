@@ -128,10 +128,10 @@ int ds1620_read_temp(void)
 {
   short t;
 
-  ds1620_rst_start(callbacks);
-  ds1620_send_command(READ_TEMP,callbacks); // Next 9 clock cycles, last temp conv result
-  t = (short)ds1620_receive_data(callbacks);
-  ds1620_rst_stop(callbacks);
+  ds1620_rst_start(&callbacks);
+  ds1620_send_command(READ_TEMP,&callbacks); // Next 9 clock cycles, last temp conv result
+  t = (short)ds1620_receive_data(&callbacks);
+  ds1620_rst_stop(&callbacks);
 
   // Check sign bit from Temp
   if (t & 0x0100) {
@@ -152,8 +152,8 @@ void ds1620_write_th(int high_temp)
   int bit;
 
   high_temp = high_temp * 2;
-  ds1620_rst_start(callbacks);
-  ds1620_send_command(WRITE_TH,callbacks); // Next 9 clock cycles, value of the high temp limit
+  ds1620_rst_start(&callbacks);
+  ds1620_send_command(WRITE_TH,&callbacks); // Next 9 clock cycles, value of the high temp limit
   for (int n = 0; n < 9; n++) { // Send all nine bits of temperature
     bit = (high_temp >> n) & 0x01;
     callbacks.dq_set_callback(bit);       //digitalWrite(_DQ, bit); // DQ HIGH or LOW based on bit
@@ -161,7 +161,7 @@ void ds1620_write_th(int high_temp)
     callbacks.clock_high_callback();      //digitalWrite(_CLK, HIGH);  
   }
   callbacks.delay_callback(WRITE_DELAY);  // Write can take up to 10ms
-  ds1620_rst_stop(callbacks);
+  ds1620_rst_stop(&callbacks);
 }
 
 void ds1620_write_tl(int temp)
@@ -169,8 +169,8 @@ void ds1620_write_tl(int temp)
   int bit;
 
   temp = temp * 2;
-  ds1620_rst_start(callbacks);
-  ds1620_send_command(WRITE_TL,callbacks); // Next 9 clock cycles, value of the high temp limit
+  ds1620_rst_start(&callbacks);
+  ds1620_send_command(WRITE_TL,&callbacks); // Next 9 clock cycles, value of the high temp limit
   for (int n = 0; n < 9; n++) { // Send all nine bits of temperature
     bit = (temp >> n) & 0x01;
     callbacks.dq_set_callback(bit);       //digitalWrite(_DQ, bit); // DQ HIGH or LOW based on bit
@@ -178,17 +178,17 @@ void ds1620_write_tl(int temp)
     callbacks.clock_high_callback();      //digitalWrite(_CLK, HIGH);  
   }
   callbacks.delay_callback(WRITE_DELAY);  // Write can take up to 10ms
-  ds1620_rst_stop(callbacks);
+  ds1620_rst_stop(&callbacks);
 }
 
 int ds1620_read_th(void)
 {
   int temp = 0;
 
-  ds1620_rst_start(callbacks);
-  ds1620_send_command(READ_TH,callbacks); // Next 8 clock cycles output value of config register
-  temp = ds1620_receive_data(callbacks) / 2;
-  ds1620_rst_stop(callbacks);
+  ds1620_rst_start(&callbacks);
+  ds1620_send_command(READ_TH,&callbacks); // Next 8 clock cycles output value of config register
+  temp = ds1620_receive_data(&callbacks) / 2;
+  ds1620_rst_stop(&callbacks);
   return (temp);
 }
 
@@ -196,10 +196,10 @@ int ds1620_read_tl(void)
 {
   int temp = 0;
 
-  ds1620_rst_start(callbacks);
-  ds1620_send_command(READ_TL,callbacks); // Next 8 clock cycles output value of config register
-  temp = ds1620_receive_data(callbacks) / 2;
-  ds1620_rst_stop(callbacks);
+  ds1620_rst_start(&callbacks);
+  ds1620_send_command(READ_TL,&callbacks); // Next 8 clock cycles output value of config register
+  temp = ds1620_receive_data(&callbacks) / 2;
+  ds1620_rst_stop(&callbacks);
   return (temp);
 }
 
@@ -207,10 +207,10 @@ int ds1620_read_counter(void)
 {
   int counter = 0;
 
-  ds1620_rst_start(callbacks);
-  ds1620_send_command(READ_CNTR,callbacks); // Next 9 clock cycles output value of counter
-  counter = ds1620_receive_data(callbacks);
-  ds1620_rst_stop(callbacks);
+  ds1620_rst_start(&callbacks);
+  ds1620_send_command(READ_CNTR,&callbacks); // Next 9 clock cycles output value of counter
+  counter = ds1620_receive_data(&callbacks);
+  ds1620_rst_stop(&callbacks);
   return (counter);
 }
 
@@ -218,25 +218,25 @@ int ds1620_read_slope(void)
 {
   int slope = 0;
 
-  ds1620_rst_start(callbacks);
-  ds1620_send_command(READ_SLOPE,callbacks); // Next 9 clock cycles output value of counter
-  slope = ds1620_receive_data(callbacks);
-  ds1620_rst_stop(callbacks);
+  ds1620_rst_start(&callbacks);
+  ds1620_send_command(READ_SLOPE,&callbacks); // Next 9 clock cycles output value of counter
+  slope = ds1620_receive_data(&callbacks);
+  ds1620_rst_stop(&callbacks);
   return (slope);
 }
 
 void ds1620_start_conv(void)
 {
-  ds1620_rst_start(callbacks);
-  ds1620_send_command(START_CNV,callbacks); // Begins temp conv, depends on 1-shot mode   
-  ds1620_rst_stop(callbacks);
+  ds1620_rst_start(&callbacks);
+  ds1620_send_command(START_CNV,&callbacks); // Begins temp conv, depends on 1-shot mode   
+  ds1620_rst_stop(&callbacks);
 }
 
 void ds1620_stop_conv(void)
 {
-  ds1620_rst_start(callbacks);
-  ds1620_send_command(STOP_CNV,callbacks); // Stops temperature conversion 
-  ds1620_rst_stop(callbacks);
+  ds1620_rst_start(&callbacks);
+  ds1620_send_command(STOP_CNV,&callbacks); // Stops temperature conversion 
+  ds1620_rst_stop(&callbacks);
 }
 
 int ds1620_write_config(int config_register)
@@ -247,11 +247,11 @@ int ds1620_write_config(int config_register)
      2 = Bad config register
    */
   if (config_register > 0) {
-    ds1620_rst_start(callbacks);
-    ds1620_send_command(WRITE_CFG,callbacks); // Next 8 clock cycles, value of config register;
-    ds1620_send_command(config_register,callbacks);
+    ds1620_rst_start(&callbacks);
+    ds1620_send_command(WRITE_CFG,&callbacks); // Next 8 clock cycles, value of config register;
+    ds1620_send_command(config_register,&callbacks);
     callbacks.delay_callback(WRITE_DELAY); // Write can take up to 10ms
-    ds1620_rst_stop(callbacks);
+    ds1620_rst_stop(&callbacks);
     // Confirm that config was properly written
     if (ds1620_read_config() == config_register) {
       return 0;
@@ -266,10 +266,10 @@ int ds1620_read_config(void)
 {
   int config_register = 0;
 
-  ds1620_rst_start(callbacks);
-  ds1620_send_command(READ_CFG,callbacks); // Next 8 clock cycles output value of config register
-  config_register = ds1620_receive_data(callbacks);
-  ds1620_rst_stop(callbacks);
+  ds1620_rst_start(&callbacks);
+  ds1620_send_command(READ_CFG,&callbacks); // Next 8 clock cycles output value of config register
+  config_register = ds1620_receive_data(&callbacks);
+  ds1620_rst_stop(&callbacks);
   return (config_register);
 }
 

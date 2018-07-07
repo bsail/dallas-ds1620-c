@@ -21,6 +21,19 @@
 
 #include <inttypes.h>
 
+struct ds1620_callbacks{
+  void (*clock_low_callback) (void);
+  void (*clock_high_callback) (void);
+  void (*reset_low_callback) (void);
+  void (*reset_high_callback) (void);
+  void (*dq_set_callback) (uint8_t bit);
+  uint8_t(*dq_get_callback) (void);
+  void (*dq_set_output_callback) (void);
+  void (*dq_set_input_callback) (void);
+  void (*setup_ports_callback) (void);
+  void (*delay_callback) (unsigned long);
+};
+
 void ds1620_init(void);
 int ds1620_read_temp(void);
 void ds1620_write_th(int high_temp);

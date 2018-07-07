@@ -1,4 +1,4 @@
-C DS1620 Library 0.2
+C DS1620 Library
 ===============
 
 Fork of original library by [jpmulligan](https://github.com/jpmulligan/Arduino-DS1620).
@@ -49,9 +49,18 @@ You may use and create additional tasks for Ceedling build system. Please refer 
 * /src - library source directory
   * ds1620.h - main header
   * ds1620.c - main implementation
+  * ds1620_send_command.h - header of command interface
+  * ds1620_send_command.c - implementation of command interface
+  * ds1620_receive_data.h - header for data receive subroutine
+  * ds1620_receive_data.c - implementation of data receive subroutine
+  * ds1620_reset.h - header for reset functions
+  * ds1620_reset.c - implementation of reset functions
 
 * /test
   * test_ds1620.c - Unity test file for ds1620.c module (use `ceedling test:ds1620` to run tests only in this source file)
+  * test_ds1620_send_command.c - Unity test file for ds1620_send_command.c module (use `ceedling test:ds1620_send_command` to run tests only in this source file)
+  * test_ds1620_receive_data.c - Unity test file for ds1620_receive_data.c module (use `ceedling test:ds1620_receive_data` to run tests only in this source file)
+  * test_ds1620_reset.c - Unity test file for ds1620_reset.c module (use `ceedling test:ds1620_reset` to run tests only in this source file)
 
 * /
   * COPYING - GNU General Public License version 3

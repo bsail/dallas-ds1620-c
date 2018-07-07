@@ -15,55 +15,34 @@
   You should have received a copy of the GNU Lesser General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-  Project URL:  http://wiki.thinkhole.org/ds1620
-  
-  Constructor takes three arguments which are the Arduino pins connected to
-  pins 1 (DQ), 2 (CLK/CONV) and 3 (RST) on the DS1620.
-  
 */
 #ifndef DS1620_h
 #define DS1620_h
 
 #include <inttypes.h>
 
-// class DS1620
-// {
-//   public:
-    void DS1620_DS1620(/*int DQ, int CLK, int RST*/);
-    int DS1620_read_temp();
-    void DS1620_write_th(int high_temp);
-    void DS1620_write_tl(int temp);
-    int DS1620_read_th();
-    int DS1620_read_tl();
-    int DS1620_read_counter();
-    int DS1620_read_slope();
-    void DS1620_start_conv();
-    void DS1620_stop_conv();
-    int DS1620_write_config(int config_register);
-    int DS1620_read_config();
-    
-  // private:
-    int DS1620_receive_data();
-    void DS1620_rst_start();
-    void DS1620_rst_stop();
-    void DS1620_send_command(int command);
-    // int _DQ;
-    // int _CLK;
-    // int _RST;
-    int _T_HIGH;
-    int _T_LOW;
-    int _T_COM;
+void DS1620_DS1620(void);
+int DS1620_read_temp(void);
+void DS1620_write_th(int high_temp);
+void DS1620_write_tl(int temp);
+int DS1620_read_th(void);
+int DS1620_read_tl(void);
+int DS1620_read_counter(void);
+int DS1620_read_slope(void);
+void DS1620_start_conv(void);
+void DS1620_stop_conv(void);
+int DS1620_write_config(int config_register);
+int DS1620_read_config(void);
 
-  void ds1620_clock_low_set_callback(void(*callback)(void));
-  void ds1620_clock_high_set_callback(void(*callback)(void));
-  void ds1620_reset_low_set_callback(void(*callback)(void));
-  void ds1620_reset_high_set_callback(void(*callback)(void));
-  void ds1620_dq_set_set_callback(void(*callback)(uint8_t bit));
-  void ds1620_dq_get_set_callback(uint8_t(*callback)(void));
-  void ds1620_dq_set_output_set_callback(void(*callback)(void));
-  void ds1620_dq_set_input_set_callback(void(*callback)(void));
-  void ds1620_setup_ports_set_callback(void(*callback)(void));
-  void ds1620_delay_set_callback(void (*callback)(unsigned long));
-// };
+void ds1620_clock_low_set_callback(void (*callback) (void));
+void ds1620_clock_high_set_callback(void (*callback) (void));
+void ds1620_reset_low_set_callback(void (*callback) (void));
+void ds1620_reset_high_set_callback(void (*callback) (void));
+void ds1620_dq_set_set_callback(void (*callback) (uint8_t bit));
+void ds1620_dq_get_set_callback(uint8_t(*callback) (void));
+void ds1620_dq_set_output_set_callback(void (*callback) (void));
+void ds1620_dq_set_input_set_callback(void (*callback) (void));
+void ds1620_setup_ports_set_callback(void (*callback) (void));
+void ds1620_delay_set_callback(void (*callback) (unsigned long));
 
 #endif

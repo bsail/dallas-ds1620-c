@@ -8,9 +8,12 @@ int ds1620_read(int command,
 {
   int value = 0;
 
-  ds1620_rst_start(callbacks);
-  ds1620_send_command(command,callbacks); // Next 8 clock cycles output value of config register
-  value = ds1620_receive_data(callbacks) / 2;
-  ds1620_rst_stop(callbacks);
+  if(callbacks != 0)
+  {
+    ds1620_rst_start(callbacks);
+    ds1620_send_command(command,callbacks); // Next 8 clock cycles output value of config register
+    value = ds1620_receive_data(callbacks) / 2;
+    ds1620_rst_stop(callbacks);
+  }
   return (value);
 }

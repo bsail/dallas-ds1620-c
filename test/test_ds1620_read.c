@@ -27,7 +27,19 @@ void tearDown(void)
   memset(&callbacks,0,sizeof(callbacks));
 }
 
-void test_ds1620_read_NeedToImplement(void)
+void test_ds1620_read_null_pointer_should_not_segfault(void)
 {
-    TEST_IGNORE_MESSAGE("Need to Implement ds1620_read");
+  TEST_ASSERT_EQUAL(0,ds1620_read(0,0));
+}
+
+void test_ds1620_read_should_work(void)
+{
+  int command = 0xAA;
+  int value = 0xBD;
+  ds1620_rst_start_Expect(&callbacks);
+  ds1620_send_command_Expect(command,&callbacks);
+  ds1620_receive_data_ExpectAndReturn(&callbacks,value);
+  ds1620_rst_stop_Expect(&callbacks);
+
+  TEST_ASSERT_EQUAL(value/2,ds1620_read(command,&callbacks));
 }

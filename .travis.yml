@@ -5,9 +5,7 @@ install:
   - mkdir build
   - bundler install
 script:
-   # - bundler exec rake 
-   # - bundler exec ceedling test:all
-  - bundler exec rake gcov:all
+  - bundler exec rake travis
 after_success:
   - coveralls-lcov coverage.info
 # language: c

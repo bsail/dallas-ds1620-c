@@ -1,5 +1,6 @@
 language: ruby
-before_install: 
+before_install:
+  - sudo apt install lcov
   - gem install ceedling
 install:
   - mkdir build
@@ -8,7 +9,3 @@ script:
   - bundler exec rake travis
 after_success:
   - coveralls-lcov coverage.info
-# language: c
-# script: ceedling test:all
-# before_install:
-# - gem install ceedling coveralls thor

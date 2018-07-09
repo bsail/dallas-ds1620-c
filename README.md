@@ -147,6 +147,9 @@ You may use and create additional tasks for Ceedling build system. Please refer 
   * README.md   - this file
   * project.yml - Ceedling project file including parameters of test compiler and linker
   * .gitignore  - definitions of files and directories to be ignored by git
+  * .travis.yml - configuration file for Travis CI
+  * Gemfile - list of required gems
+  * rakefile.rb - additional configuration of build system
 
 
 ## Third Party Source Directories

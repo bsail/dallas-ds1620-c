@@ -1,6 +1,5 @@
 language: c
 script: ceedling test:all
 before_install:
-- rvm install 2.5.1
-- gem install ceedling
-- gem install coveralls
+- rvm install default
+- gem install ceedling coveralls

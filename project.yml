@@ -34,6 +34,16 @@
   :support:
     - test/support
 
+:flags:
+  :test:
+    :compile:
+      :main:       # add '--O1' to compilation of main.c as part of test builds including main.c
+        - -std=c99
+  :gcov:
+    :compile:
+      :main:       # add '--O1' to compilation of main.c as part of test builds including main.c
+        - -std=c99
+
 :defines:
   # in order to add common defines:
   #  1) remove the trailing [] from the :common: section

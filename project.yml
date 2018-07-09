@@ -37,11 +37,11 @@
 :flags:
   :test:
     :compile:
-      :main:       # add '--O1' to compilation of main.c as part of test builds including main.c
+      :*:       # add '--O1' to compilation of main.c as part of test builds including main.c
         - -std=c99
   :gcov:
     :compile:
-      :main:       # add '--O1' to compilation of main.c as part of test builds including main.c
+      :*:       # add '--O1' to compilation of main.c as part of test builds including main.c
         - -std=c99
 
 :defines:

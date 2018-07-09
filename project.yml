@@ -10,15 +10,15 @@
   :use_test_preprocessor: TRUE
   :use_auxiliary_dependencies: TRUE
   :build_root: build
-#  :release_build: TRUE
+  :release_build: TRUE
   :test_file_prefix: test_
   :which_ceedling: vendor/ceedling
   :default_tasks:
     - test:all
 
-#:release_build:
-#  :output: MyApp.out
-#  :use_assembly: FALSE
+:release_build:
+ :output: ds1620.a
+ :use_assembly: FALSE
 
 :environment:
 
@@ -35,6 +35,14 @@
     - test/support
 
 :flags:
+  :release:
+    :compile:
+      :*:       # add '--O1' to compilation of main.c as part of test builds including main.c
+        - -std=c99
+    :link:
+      :*:
+        - -c
+      :ds1620: []
   :test:
     :compile:
       :*:       # add '--O1' to compilation of main.c as part of test builds including main.c
@@ -80,6 +88,15 @@
 # Ceedling defaults to using gcc for compiling, linking, etc.
 # As [:tools] is blank, gcc will be used (so long as it's in your system path)
 # See documentation to configure a given toolchain for use
+:tools:
+  :release_linker:
+    :executable: ar
+    :arguments:
+      - rcs
+      - ${2}
+      - ${4}
+      - ${1}
+
 
 # LIBRARIES
 # These libraries are automatically injected into the build process. Those specified as

@@ -32,3 +32,60 @@ void test_ds1620_init_should_call_setup_ports(void)
   ds1620_init();
 }
 
+void test_ds1620_read_th_should_work(void)
+{
+  int value = 0xAB;
+  ds1620_read_ExpectAndReturn(READ_TH,0,value);
+  ds1620_read_IgnoreArg_callbacks();
+  TEST_ASSERT_EQUAL(value/2,ds1620_read_th());
+}
+
+void test_ds1620_read_tl_should_work(void)
+{
+  int value = 0xAB;
+  ds1620_read_ExpectAndReturn(READ_TL,0,value);
+  ds1620_read_IgnoreArg_callbacks();
+  TEST_ASSERT_EQUAL(value/2,ds1620_read_tl());
+}
+
+void test_ds1620_read_counter_should_work(void)
+{
+  int value = 0xAB;
+  ds1620_read_ExpectAndReturn(READ_CNTR,0,value);
+  ds1620_read_IgnoreArg_callbacks();
+  TEST_ASSERT_EQUAL(value,ds1620_read_counter());
+}
+
+void test_ds1620_read_slope_should_work(void)
+{
+  int value = 0xAB;
+  ds1620_read_ExpectAndReturn(READ_SLOPE,0,value);
+  ds1620_read_IgnoreArg_callbacks();
+  TEST_ASSERT_EQUAL(value,ds1620_read_slope());
+}
+
+void test_ds1620_read_config_should_work(void)
+{
+  int value = 0xAB;
+  ds1620_read_ExpectAndReturn(READ_CFG,0,value);
+  ds1620_read_IgnoreArg_callbacks();
+  TEST_ASSERT_EQUAL(value,ds1620_read_config());
+}
+
+void test_ds1620_read_temp_should_work_positive(void)
+{
+  int value = 0xAB;
+  int result = 0xAB/2;
+  ds1620_read_ExpectAndReturn(READ_TEMP,0,value);
+  ds1620_read_IgnoreArg_callbacks();
+  TEST_ASSERT_EQUAL(result,ds1620_read_temp());
+}
+
+void test_ds1620_read_temp_should_work_negative(void)
+{
+  int value = 0x1AB;
+  int result = -(0xFF-0xAB)/2;
+  ds1620_read_ExpectAndReturn(READ_TEMP,0,value);
+  ds1620_read_IgnoreArg_callbacks();
+  TEST_ASSERT_EQUAL(result,ds1620_read_temp());
+}

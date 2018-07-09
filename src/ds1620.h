@@ -25,6 +25,22 @@ extern "C" {
 
 #include <inttypes.h>
 
+// ds1620 Commands
+
+#define READ_TEMP  0xAA         // Read temperature register
+#define WRITE_TH   0x01         // Write to the TH (High Temp) register
+#define WRITE_TL   0x02         // Write to the TL (Low Temp) register
+#define READ_TH    0xA1         // Read the TH (High Temp) register
+#define READ_TL    0xA2         // Read the TL (Low Temp) register
+#define READ_CNTR  0xA0         // Read the value of the counter byte
+#define READ_SLOPE 0xA9         // Read the slope counter byte
+#define START_CNV  0xEE         // Begin temperature conversion
+#define STOP_CNV   0x22         // Stop temperature conversion
+#define WRITE_CFG  0x0C         // Write configuration register
+#define READ_CFG   0xAC         // Read the value in the config register
+
+#define WRITE_DELAY 20          // Time to wait (ms) after a EEPROM write
+
 struct ds1620_callbacks{
   void (*clock_low_callback) (void);
   void (*clock_high_callback) (void);

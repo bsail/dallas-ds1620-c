@@ -1,6 +1,6 @@
 language: ruby
 before_install:
-  - sudo apt install lcov
+  - sudo apt-get install lcov
   - gem install ceedling
 install:
   - mkdir build

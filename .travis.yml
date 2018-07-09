@@ -1,5 +1,4 @@
 language: c
 script: ceedling test:all
 before_install:
-- rvm install default
-- gem install ceedling coveralls
+- gem install ceedling coveralls thor

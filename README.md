@@ -1,8 +1,9 @@
 C DS1620 Library
 ===============
 
-[![Build Status](https://travis-ci.org/bsail/dallas-ds1620-c.svg?branch=master)](https://travis-ci.org/bsail/dallas-ds1620-c)
-[![Coverage Status](https://coveralls.io/repos/github/bsail/dallas-ds1620-c/badge.svg?branch=master)](https://coveralls.io/github/bsail/dallas-ds1620-c?branch=master)
+[![Build Status](https://img.shields.io/travis/bsail/dallas-ds1620-c/master.svg)](https://travis-ci.org/bsail/dallas-ds1620-c)
+[![Coverage Status](https://img.shields.io/coveralls/github/bsail/dallas-ds1620-c/master.svg)](https://coveralls.io/github/bsail/dallas-ds1620-c?branch=master)
+[![Coverity Scan Build Status](https://img.shields.io/coverity/scan/16209.svg)](https://scan.coverity.com/projects/bsail-dallas-ds1620-c)
 
 Fork of original library by [jpmulligan](https://github.com/jpmulligan/Arduino-DS1620).
 

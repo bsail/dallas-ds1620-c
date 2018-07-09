@@ -17,7 +17,6 @@ Latest version of library:
 # Development
 For developers looking to extend, bug fix, build, and test this library with dependencies and test infrastructure included in the source tree.
 
-
 Setup Environment - Ubuntu 16.04/18.04
 ---------------------------------
 ```bash
@@ -25,13 +24,84 @@ sudo apt install build-essential git ruby gcov lcov
 sudo gem install ceedling
 ```
 
-
 Get Code
 -----------------
 ```bash
 mkdir ds1620
 git clone https://github.com/bsail/dallas-ds1620-c ds1620
 cd ds1620
+```
+
+For a proper integration of this library one should describe the callbacks to access I/O ports for communication with device.
+The example implementation of callbacks is given below:
+```c
+static void clock_low_callback(void)
+{
+  bit_clear(PORTK, 7);
+}
+
+static void clock_high_callback(void)
+{
+  bit_set(PORTK, 7);
+}
+
+static void reset_low_callback(void)
+{
+  /* In this example we assume that there are two devices with different reset lines;
+   * ds1620_current_device is a local variable
+   */
+  if (ds1620_current_device == 1)
+    bit_clear(PORTK, 4);
+  else
+    bit_clear(PORTK, 5);
+}
+
+static void reset_high_callback(void)
+{
+  /* In this example we assume that there are two devices with different reset lines;
+   * ds1620_current_device is a local variable
+   */
+  if (ds1620_current_device == 1)
+    bit_set(PORTK, 4);
+  else
+    bit_set(PORTK, 5);
+}
+
+static void dq_set_callback(uint8_t bit)
+{
+  if (bit)
+    bit_set(PORTK, 6);
+  else
+    bit_clear(PORTK, 6);
+}
+
+static uint8_t dq_get_callback(void)
+{
+  return bit_check(PORTK, 6);
+}
+
+static void dq_set_output_callback(void)
+{
+  bit_set(DDRK, 6);
+}
+
+static void dq_set_input_callback(void)
+{
+  bit_clear(DDRK, 6);
+}
+
+static void setup_ports_callback(void)
+{
+  bit_set(DDRK, 4); /* Reset line for ds1620 #1 */
+  bit_set(DDRK, 5); /* Reset line for ds1620 #0 */
+  bit_set(DDRK, 6); /* Data line */
+  bit_set(DDRK, 7); /* Clock line */
+}
+
+static void delay_callback(unsigned long delay_ms)
+{
+  some_fancy_delay_function(delay_ms);
+}
 ```
 
 # Tests
@@ -46,7 +116,6 @@ Generate LCOV coverage report (`build/lcov/index.html`)
 ceedling lcov
 ```
 You may use and create additional tasks for Ceedling build system. Please refer to the documentation in the `vendor/ceedling/docs`.
-
 
 # Project Structure
 ## Source Directories

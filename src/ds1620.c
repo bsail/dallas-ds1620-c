@@ -58,69 +58,6 @@
 
 struct ds1620_callbacks callbacks;
 
-#if 0
-
-/* Example implementation of callbacks */
-
-static void clock_low_callback(void)
-{
-  bit_clear(PORTK, 7);
-}
-
-static void clock_high_callback(void)
-{
-  bit_set(PORTK, 7);
-}
-
-static void reset_low_callback(void)
-{
-  if (ds1620_current_device == 1)
-    bit_clear(PORTK, 4);
-  else
-    bit_clear(PORTK, 5);
-}
-
-static void reset_high_callback(void)
-{
-  if (ds1620_current_device == 1)
-    bit_set(PORTK, 4);
-  else
-    bit_set(PORTK, 5);
-}
-
-static void dq_set_callback(uint8_t bit)
-{
-  if (bit)
-    bit_set(PORTK, 6);
-  else
-    bit_clear(PORTK, 6);
-}
-
-static uint8_t dq_get_callback(void)
-{
-  return bit_check(PORTK, 6);
-}
-
-static void dq_set_output_callback(void)
-{
-  bit_set(DDRK, 6);
-}
-
-static void dq_set_input_callback(void)
-{
-  bit_clear(DDRK, 6);
-}
-
-static void setup_ports_callback(void)
-{
-  bit_set(DDRK, 4);
-  bit_set(DDRK, 5);
-  bit_set(DDRK, 6);
-  bit_set(DDRK, 7);
-}
-
-#endif
-
 void ds1620_init(void)
 {
   callbacks.setup_ports_callback();

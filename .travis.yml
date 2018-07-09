@@ -7,7 +7,7 @@ install:
 script:
     # - bundler exec rake 
     # - bundler exec ceedling test:all
-    - bundler exec ceedling gcov:all
+    - bundler exec rake gcov:all
 # language: c
 # script: ceedling test:all
 # before_install:

@@ -5,6 +5,9 @@
 PROJECT_CEEDLING_ROOT = "vendor/ceedling"
 load "#{PROJECT_CEEDLING_ROOT}/lib/ceedling/rakefile.rb"
 
+# Ceedling.load_project
+ENV['GCOV_BUILD_PATH'] = "build/gcov/out"
+
 task :default => %w[ test:all ]
 
 desc "Generate LCOV test coverage report"

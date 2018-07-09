@@ -5,6 +5,8 @@
 #include "mock_ds1620_receive_data.h"
 #include "mock_ds1620_send_data.h"
 #include "mock_ds1620_reset.h"
+#include "mock_ds1620_read.h"
+#include <string.h>
 
 void setUp(void)
 {
@@ -29,3 +31,4 @@ void test_ds1620_init_should_call_setup_ports(void)
   example_setup_ports_Expect();
   ds1620_init();
 }
+

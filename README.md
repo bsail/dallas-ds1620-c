@@ -21,7 +21,7 @@ For developers looking to extend, bug fix, build, and test this library with dep
 Setup Environment - Ubuntu 16.04/18.04
 ---------------------------------
 ```bash
-sudo apt install build-essential git ruby
+sudo apt install build-essential git ruby gcov lcov
 sudo gem install ceedling
 ```
 
@@ -40,6 +40,10 @@ cd ds1620
 Build & Run Unit Tests
 ```bash
 ceedling test:all
+```
+Generate LCOV coverage report (`build/lcov/index.html`)
+```bash
+ceedling lcov
 ```
 You may use and create additional tasks for Ceedling build system. Please refer to the documentation in the `vendor/ceedling/docs`.
 

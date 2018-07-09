@@ -44,7 +44,8 @@ struct ds1620_callbacks callbacks;
 
 void ds1620_init(void)
 {
-  callbacks.setup_ports_callback();
+  if(callbacks.setup_ports_callback != 0)
+    callbacks.setup_ports_callback();
 }
 
 int ds1620_read_temp(void)
@@ -65,24 +66,27 @@ int ds1620_read_temp(void)
   return (t);
 }
 
+static inline void ds1620_write_t(int temp, int mode)
+{
+  if(callbacks.delay_callback != 0)
+  {
+    temp = temp * 2;
+    ds1620_rst_start(&callbacks);
+    ds1620_send_command(mode,&callbacks); // Next 9 clock cycles, value of the temp limit
+    ds1620_send_data(temp,&callbacks);
+    callbacks.delay_callback(WRITE_DELAY);  // Write can take up to 10ms
+    ds1620_rst_stop(&callbacks);
+  }
+}
+
 void ds1620_write_th(int high_temp)
 {
-  high_temp = high_temp * 2;
-  ds1620_rst_start(&callbacks);
-  ds1620_send_command(WRITE_TH,&callbacks); // Next 9 clock cycles, value of the high temp limit
-  ds1620_send_data(high_temp,&callbacks);
-  callbacks.delay_callback(WRITE_DELAY);  // Write can take up to 10ms
-  ds1620_rst_stop(&callbacks);
+  ds1620_write_t(high_temp,WRITE_TH);
 }
 
 void ds1620_write_tl(int temp)
 {
-  temp = temp * 2;
-  ds1620_rst_start(&callbacks);
-  ds1620_send_command(WRITE_TL,&callbacks); // Next 9 clock cycles, value of the high temp limit
-  ds1620_send_data(temp,&callbacks);
-  callbacks.delay_callback(WRITE_DELAY);  // Write can take up to 10ms
-  ds1620_rst_stop(&callbacks);
+  ds1620_write_t(temp,WRITE_TL);
 }
 
 int ds1620_read_th(void)

@@ -26,6 +26,12 @@ void tearDown(void)
 {
 }
 
+void test_ds1620_init_null_pointer_should_not_segfault(void)
+{
+  ds1620_setup_ports_set_callback(0);
+  ds1620_init();
+}
+
 void test_ds1620_init_should_call_setup_ports(void)
 {
   example_setup_ports_Expect();
@@ -160,3 +166,50 @@ void test_ds1620_write_config_unsuccessfull(void)
 
   TEST_ASSERT_EQUAL(1,ds1620_write_config(value));
 }
+
+void test_ds1620_write_th_null_pointer_should_not_segfault(void)
+{
+  int value = 0xAB;
+  ds1620_delay_set_callback(0);
+  ds1620_write_th(value);
+}
+
+void test_ds1620_write_tl_null_pointer_should_not_segfault(void)
+{
+  int value = 0xAB;
+  ds1620_delay_set_callback(0);
+  ds1620_write_tl(value);
+}
+
+void test_ds1620_write_th_should_work(void)
+{
+  int value = 0xAB;
+  ds1620_rst_start_Expect(0);
+  ds1620_rst_start_IgnoreArg_callbacks();
+  ds1620_send_command_Expect(WRITE_TH,0);
+  ds1620_send_command_IgnoreArg_callbacks();
+  ds1620_send_data_Expect(value*2,0);
+  ds1620_send_data_IgnoreArg_callbacks();
+  example_delay_Expect(WRITE_DELAY);
+  ds1620_rst_stop_Expect(0);
+  ds1620_rst_stop_IgnoreArg_callbacks();
+
+  ds1620_write_th(value);
+}
+
+void test_ds1620_write_tlh_should_work(void)
+{
+  int value = 0xAB;
+  ds1620_rst_start_Expect(0);
+  ds1620_rst_start_IgnoreArg_callbacks();
+  ds1620_send_command_Expect(WRITE_TL,0);
+  ds1620_send_command_IgnoreArg_callbacks();
+  ds1620_send_data_Expect(value*2,0);
+  ds1620_send_data_IgnoreArg_callbacks();
+  example_delay_Expect(WRITE_DELAY);
+  ds1620_rst_stop_Expect(0);
+  ds1620_rst_stop_IgnoreArg_callbacks();
+
+  ds1620_write_tl(value);
+}
+

@@ -1,4 +1,14 @@
-language: c
-script: ceedling test:all
-before_install:
-- gem install ceedling coveralls thor
+language: ruby
+before_install: 
+  - gem install ceedling
+install:
+    - mkdir build
+    - bundler install
+script:
+    # - bundler exec rake 
+    # - bundler exec ceedling test:all
+    - bundler exec ceedling gcov:all
+# language: c
+# script: ceedling test:all
+# before_install:
+# - gem install ceedling coveralls thor

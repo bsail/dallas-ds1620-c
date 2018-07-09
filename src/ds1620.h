@@ -19,6 +19,10 @@
 #ifndef ds1620_h
 #define ds1620_h
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <inttypes.h>
 
 struct ds1620_callbacks{
@@ -57,5 +61,9 @@ void ds1620_dq_set_output_set_callback(void (*callback) (void));
 void ds1620_dq_set_input_set_callback(void (*callback) (void));
 void ds1620_setup_ports_set_callback(void (*callback) (void));
 void ds1620_delay_set_callback(void (*callback) (unsigned long));
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

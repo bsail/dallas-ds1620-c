@@ -105,18 +105,21 @@ int ds1620_read_slope(void)
   return ds1620_read(READ_SLOPE,&callbacks);
 }
 
-void ds1620_start_conv(void)
+static inline void ds1620_conv(int mode)
 {
   ds1620_rst_start(&callbacks);
-  ds1620_send_command(START_CNV,&callbacks); // Begins temp conv, depends on 1-shot mode   
+  ds1620_send_command(mode,&callbacks);
   ds1620_rst_stop(&callbacks);
+}
+
+void ds1620_start_conv(void)
+{
+  ds1620_conv(START_CNV); // Begins temp conv, depends on 1-shot mode
 }
 
 void ds1620_stop_conv(void)
 {
-  ds1620_rst_start(&callbacks);
-  ds1620_send_command(STOP_CNV,&callbacks); // Stops temperature conversion 
-  ds1620_rst_stop(&callbacks);
+  ds1620_conv(STOP_CNV); // Stops temperature conversion 
 }
 
 int ds1620_write_config(int config_register)
@@ -126,7 +129,7 @@ int ds1620_write_config(int config_register)
      1 = Write verification failed
      2 = Bad config register
    */
-  if (config_register > 0) {
+  if ((config_register > 0)&&(callbacks.delay_callback != 0)) {
     ds1620_rst_start(&callbacks);
     ds1620_send_command(WRITE_CFG,&callbacks); // Next 8 clock cycles, value of config register;
     ds1620_send_command(config_register,&callbacks);

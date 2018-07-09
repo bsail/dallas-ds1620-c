@@ -2,12 +2,14 @@ language: ruby
 before_install: 
   - gem install ceedling
 install:
-    - mkdir build
-    - bundler install
+  - mkdir build
+  - bundler install
 script:
-    # - bundler exec rake 
-    # - bundler exec ceedling test:all
-    - bundler exec rake gcov:all
+   # - bundler exec rake 
+   # - bundler exec ceedling test:all
+  - bundler exec rake gcov:all
+after_success:
+  - coveralls-lcov coverage.info
 # language: c
 # script: ceedling test:all
 # before_install:

@@ -1,6 +1,6 @@
 #include "unity.h"
 #include "ds1620_send_data.h"
-#include "mock_example.h"
+#include "mock_example-ds1620.h"
 #include <string.h>
 
 struct ds1620_callbacks callbacks;

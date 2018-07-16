@@ -1,6 +1,6 @@
 #include "unity.h"
 #include "ds1620.h"
-#include "mock_example.h"
+#include "mock_example-ds1620.h"
 #include "mock_ds1620_send_command.h"
 #include "mock_ds1620_receive_data.h"
 #include "mock_ds1620_send_data.h"

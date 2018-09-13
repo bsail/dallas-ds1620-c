@@ -33,6 +33,7 @@ Get Code
 ```bash
 mkdir ds1620
 git clone https://github.com/bsail/dallas-ds1620-c ds1620
+ceedling upgrade ds1620
 cd ds1620
 ```
 

@@ -3,3 +3,4 @@ build/**
 coverage.info
 coverage/**
 cov-int/**
+vendor/**

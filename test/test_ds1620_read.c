@@ -1,6 +1,6 @@
 #include "unity.h"
 #include "ds1620_read.h"
-#include "mock_example-ds1620.h"
+#include "mock_example_ds1620.h"
 #include "mock_ds1620_send_command.h"
 #include "mock_ds1620_receive_data.h"
 #include "mock_ds1620_reset.h"
@@ -8,8 +8,13 @@
 
 struct ds1620_callbacks callbacks;
 
+int GlobalVerifyOrder;
+int GlobalExpectCount;
+
 void setUp(void)
 {
+  GlobalVerifyOrder = 0;
+  GlobalExpectCount = 0;
   callbacks.clock_low_callback = example_clock_low;
   callbacks.clock_high_callback = example_clock_high;
   callbacks.reset_low_callback = example_reset_low;

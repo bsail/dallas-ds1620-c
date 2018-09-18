@@ -41,5 +41,5 @@ void test_ds1620_read_should_work(void)
   ds1620_receive_data_ExpectAndReturn(&callbacks,value);
   ds1620_rst_stop_Expect(&callbacks);
 
-  TEST_ASSERT_EQUAL(value/2,ds1620_read(command,&callbacks));
+  TEST_ASSERT_EQUAL(value,ds1620_read(command,&callbacks));
 }

@@ -213,3 +213,25 @@ void test_ds1620_write_tlh_should_work(void)
   ds1620_write_tl(value);
 }
 
+void test_ds1620_read_temp_datasheet_example_conversion(void)
+{
+  ds1620_read_ExpectAndReturn(READ_TEMP,0,0x00FA);
+  ds1620_read_IgnoreArg_callbacks();
+  TEST_ASSERT_EQUAL(125,ds1620_read_temp());
+
+  ds1620_read_ExpectAndReturn(READ_TEMP,0,0x0032);
+  ds1620_read_IgnoreArg_callbacks();
+  TEST_ASSERT_EQUAL(25,ds1620_read_temp());
+
+  ds1620_read_ExpectAndReturn(READ_TEMP,0,0x0000);
+  ds1620_read_IgnoreArg_callbacks();
+  TEST_ASSERT_EQUAL(0,ds1620_read_temp());
+
+  ds1620_read_ExpectAndReturn(READ_TEMP,0,0x01CE);
+  ds1620_read_IgnoreArg_callbacks();
+  TEST_ASSERT_EQUAL(-25,ds1620_read_temp());
+
+  ds1620_read_ExpectAndReturn(READ_TEMP,0,0x0192);
+  ds1620_read_IgnoreArg_callbacks();
+  TEST_ASSERT_EQUAL(-55,ds1620_read_temp());
+}
